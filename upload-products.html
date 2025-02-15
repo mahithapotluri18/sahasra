@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Products - Sahasra</title>
+    <link rel="icon" type="image/png" href="sahasralogo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --card-bg: #ffffff;
+            --border-color: #ddd;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5e6d3;
+            color: var(--text-color);
+        }
+
+        .header {
+            background-color: #effaf6;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            color: #C68961;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .product-table {
+            width: 100%;
+            background: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-top: 2rem;
+        }
+
+        .product-table th,
+        .product-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .product-table th {
+            background-color: rgba(198, 137, 97, 0.1);
+            font-weight: bold;
+        }
+
+        .product-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .upload-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <button class="back-btn" onclick="window.location.href='index.html'">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </button>
+        <h1>Upload Products</h1>
+    </header>
+
+    <div class="container">
+        <table class="product-table">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Upload Date</th>
+                </tr>
+            </thead>
+            <tbody id="productTableBody">
+                <!-- Product data will be populated here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Sample data - Replace with actual data from your backend
+        const products = [
+            {
+                name: 'Product 1',
+                category: 'Category A',
+                price: '₹9,999',
+                stock: 50,
+                uploadDate: '2024-02-14'
+            },
+            {
+                name: 'Product 2',
+                category: 'Category B',
+                price: '₹14,999',
+                stock: 30,
+                uploadDate: '2024-02-13'
+            }
+        ];
+
+        function populateProductTable() {
+            const tableBody = document.getElementById('productTableBody');
+            tableBody.innerHTML = '';
+
+            products.forEach(product => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${product.name}</td>
+                    <td>${product.category}</td>
+                    <td>${product.price}</td>
+                    <td>${product.stock}</td>
+                    <td class="upload-date">${product.uploadDate}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Initialize the table
+        populateProductTable();
+    </script>
+</body>
+</html>

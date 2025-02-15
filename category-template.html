@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sahasra - Category</title>
+    <link rel="icon" type="image/png" href="sahasralogo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="categories.css">
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --card-bg: #ffffff;
+            --border-color: #ddd;
+            --primary-color: #C68961;
+            --primary-dark: #b57951;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --hover-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1a1a1a;
+            --text-color: #ffffff;
+            --card-bg: #333333;
+            --border-color: #444;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .dashboard-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .dashboard-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .count {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin: 1rem 0;
+        }
+
+        .list {
+            margin-top: 1rem;
+        }
+
+        .list-item {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .list-item:last-child {
+            border-bottom: none;
+        }
+
+        .status {
+            color: #28a745;
+        }
+
+        .rating {
+            color: gold;
+        }
+
+        /* Header styles */
+        header {
+            background: var(--card-bg);
+            padding: 1rem;
+            box-shadow: var(--card-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            color: var(--primary-color);
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        #searchInput {
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+        }
+
+        .search-btn {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            color: var(--primary-color);
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+        }
+
+        .user-menu {
+            position: relative;
+        }
+
+        .user-menu img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .menu-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--card-bg);
+            border-radius: 5px;
+            box-shadow: var(--card-shadow);
+            min-width: 200px;
+            display: none;
+            z-index: 1000;
+        }
+
+        .menu-dropdown.show {
+            display: block;
+        }
+
+        .menu-dropdown a {
+            display: block;
+            padding: 0.8rem 1rem;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: background-color 0.3s;
+        }
+
+        .menu-dropdown a:hover {
+            background-color: var(--bg-color);
+        }
+
+        .community-chat {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            width: 300px;
+            border: 2px solid #C68961;
+            display: none;
+            z-index: 1000;
+        }
+
+        .chat-header {
+            padding: 10px 15px;
+            background: #C68961;
+            color: white;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header i {
+            cursor: pointer;
+        }
+
+        .chat-messages {
+            height: 300px;
+            overflow-y: auto;
+            padding: 15px;
+            background: white;
+        }
+
+        .message {
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            border-radius: 15px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .message.sent {
+            background: #C68961;
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+        }
+
+        .message.received {
+            background: #f0f0f0;
+            color: #333;
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #eee;
+            background: white;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 2px solid #C68961;
+            border-radius: 20px;
+            margin-right: 10px;
+            outline: none;
+        }
+
+        .chat-input button {
+            background: #C68961;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+
+        .chat-input button:hover {
+            background: #a06745;
+        }
+
+        .chat-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #C68961;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 999;
+            transition: transform 0.3s;
+        }
+
+        .chat-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .chat-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #dc3545;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="nav-left">
+                <a href="index.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <h1 id="categoryTitle">Category</h1>
+            </div>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search in this category...">
+                <button type="button" class="search-btn">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Dashboard Section -->
+    <div class="dashboard">
+        <div class="dashboard-card">
+            <h3><i class="fas fa-video"></i> Uploaded Videos</h3>
+            <div class="count">0</div>
+            <div class="list">
+                <div class="list-item">No videos uploaded yet</div>
+            </div>
+        </div>
+
+        <div class="dashboard-card">
+            <h3><i class="fas fa-star"></i> Reviews & Ratings</h3>
+            <div class="rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="far fa-star"></i>
+                <span>(4.0)</span>
+            </div>
+            <div class="list">
+                <div class="list-item">
+                    <span>Overall Rating</span>
+                    <span>4.0/5</span>
+                </div>
+                <div class="list-item">
+                    <span>Total Reviews</span>
+                    <span>0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-card">
+            <h3><i class="fas fa-history"></i> Payment History</h3>
+            <div class="count">₹0</div>
+            <div class="list">
+                <div class="list-item">No transactions yet</div>
+            </div>
+        </div>
+
+        <div class="dashboard-card">
+            <h3><i class="fas fa-heart"></i> Interested Sections</h3>
+            <div class="list">
+                <div class="list-item">No interests added</div>
+            </div>
+        </div>
+
+        <div class="dashboard-card">
+            <h3><i class="fas fa-thumbs-up"></i> Liked Videos</h3>
+            <div class="count">0</div>
+            <div class="list">
+                <div class="list-item">No liked videos</div>
+            </div>
+        </div>
+
+        <div class="dashboard-card">
+            <h3><i class="fas fa-chart-line"></i> Activity</h3>
+            <div class="list">
+                <div class="list-item">
+                    <span>Last Login</span>
+                    <span id="lastLogin">Just now</span>
+                </div>
+                <div class="list-item">
+                    <span>Account Status</span>
+                    <span class="status">Active</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category Content -->
+    <div class="category-page">
+        <div class="category-header">
+            <h1 id="categoryTitle">Category Title</h1>
+            <p id="categoryDescription">Category description goes here</p>
+        </div>
+        <div class="subcategories-grid" id="subcategoriesGrid">
+            <!-- Subcategories will be dynamically inserted here -->
+        </div>
+        <button class="back-button" onclick="window.location.href='home.html'">
+            <i class="fas fa-home"></i>
+        </button>
+    </div>
+
+    <!-- Community Chat -->
+    <button class="chat-toggle" id="chatToggle">
+        <i class="fas fa-comments"></i>
+        <span class="chat-badge">1</span>
+    </button>
+
+    <div class="community-chat" id="chatWindow">
+        <div class="chat-header">
+            <span>Community Chat</span>
+            <i class="fas fa-times" id="closeChat"></i>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <!-- Sample message -->
+            <div class="message received">
+                Welcome to the community chat! Feel free to ask questions or share your experiences.
+            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="messageInput" placeholder="Type your message...">
+            <button id="sendMessage">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Get category from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const category = urlParams.get('category');
+
+        // Category data
+        const categories = {
+            gardening: {
+                title: "House Gardening",
+                description: "Explore various gardening solutions and resources",
+                subcategories: [
+                    { name: "Terrace Gardening", icon: "building", description: "Urban farming solutions for your terrace" },
+                    { name: "Flower Gardening", icon: "seedling", description: "Beautiful flower cultivation techniques" },
+                    { name: "Organic Gardening", icon: "leaf", description: "Natural and sustainable gardening methods" },
+                    { name: "Herbal Gardening", icon: "spa", description: "Grow your own medicinal herbs" }
+                ]
+            },
+            hatching: {
+                title: "Hatching",
+                description: "Discover various hatching and breeding solutions",
+                subcategories: [
+                    { name: "Poultry Hatching", icon: "drumstick-bite", description: "Poultry breeding and incubation" },
+                    { name: "Aqua Culture", icon: "fish", description: "Fish breeding and aquaculture" },
+                    { name: "Silkworm Hatching", icon: "bug", description: "Silkworm cultivation techniques" },
+                    { name: "Honeybee Hatching", icon: "archive", description: "Beekeeping and honey production" }
+                ]
+            },
+            beauticians: {
+                title: "Beauticians",
+                description: "Professional beauty and wellness services",
+                subcategories: [
+                    { name: "Skin Care", icon: "spa", description: "Professional skin care treatments" },
+                    { name: "Herbal Care", icon: "leaf", description: "Natural beauty solutions" },
+                    { name: "Makeup", icon: "magic", description: "Professional makeup services" },
+                    { name: "Hairstyling", icon: "cut", description: "Hair care and styling" },
+                    { name: "Mehandi", icon: "paint-brush", description: "Traditional henna art" },
+                    { name: "Nail Art", icon: "hand-sparkles", description: "Professional nail care and design" }
+                ]
+            },
+            healers: {
+                title: "The Healers",
+                description: "Holistic healing and wellness solutions",
+                subcategories: [
+                    { name: "Yoga and Meditation Healers", icon: "om", description: "Mind and body wellness through yoga" },
+                    { name: "Herbal and Ayurvedic Healers", icon: "mortar-pestle", description: "Traditional healing methods" }
+                ]
+            },
+            designers: {
+                title: "The Designers",
+                description: "Creative design and crafting solutions",
+                subcategories: [
+                    { name: "Tailoring", icon: "cut", description: "Custom clothing and alterations" },
+                    { name: "Embroidery", icon: "thread", description: "Decorative needlework" },
+                    { name: "Crafts", icon: "palette", description: "Handmade arts and crafts" }
+                ]
+            },
+            homebytes: {
+                title: "Home Bytes",
+                description: "Explore homemade food items and delicacies",
+                subcategories: [
+                    { name: "Snacks", icon: "cookie", description: "Delicious homemade snacks" },
+                    { name: "Pickles", icon: "pepper-hot", description: "Traditional and fusion pickles" }
+                ]
+            }
+        };
+
+        // Load category content
+        function loadCategory() {
+            if (!category || !categories[category]) {
+                window.location.href = 'home.html';
+                return;
+            }
+
+            const categoryData = categories[category];
+            document.title = `Sahasra - ${categoryData.title}`;
+            document.getElementById('categoryTitle').textContent = categoryData.title;
+            document.getElementById('categoryDescription').textContent = categoryData.description;
+
+            const grid = document.getElementById('subcategoriesGrid');
+            grid.innerHTML = categoryData.subcategories.map(sub => `
+                <div class="subcategory-card" onclick="handleSubcategoryClick('${sub.name}')">
+                    <i class="fas fa-${sub.icon}"></i>
+                    <h3>${sub.name}</h3>
+                    <p>${sub.description}</p>
+                </div>
+            `).join('');
+        }
+
+        // Handle subcategory click
+        function handleSubcategoryClick(subcategory) {
+            const subcategorySlug = subcategory.toLowerCase().replace(/\s+/g, '-');
+            const categoryType = ['beauticians', 'healers'].includes(category) ? 'service' : 'product';
+            window.location.href = `subcategory.html?category=${category}&subcategory=${subcategorySlug}&type=${categoryType}`;
+        }
+
+        // Update UI with user data
+        function updateUI(user) {
+            const lastLoginElem = document.getElementById('lastLogin');
+            if (user && user.lastLogin) {
+                const loginDate = new Date(user.lastLogin);
+                lastLoginElem.textContent = loginDate.toLocaleString();
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = localStorage.getItem('sahasra_user');
+            if (!user) {
+                window.location.href = 'landing.html';
+            } else {
+                loadCategory();
+                updateUI(JSON.parse(user));
+            }
+        });
+
+        // Sync theme with main page
+        const htmlElement = document.documentElement;
+        const savedTheme = localStorage.getItem('sahasra_theme');
+        if (savedTheme) {
+            htmlElement.setAttribute('data-theme', savedTheme);
+        }
+
+        // Community Chat Functionality
+        const chatToggle = document.getElementById('chatToggle');
+        const chatWindow = document.getElementById('chatWindow');
+        const closeChat = document.getElementById('closeChat');
+        const messageInput = document.getElementById('messageInput');
+        const sendMessage = document.getElementById('sendMessage');
+        const chatMessages = document.getElementById('chatMessages');
+        const chatBadge = document.querySelector('.chat-badge');
+
+        // Show chat window
+        chatToggle.addEventListener('click', () => {
+            chatWindow.style.display = 'block';
+            chatToggle.style.display = 'none';
+            chatBadge.style.display = 'none';
+        });
+
+        // Close chat window
+        closeChat.addEventListener('click', () => {
+            chatWindow.style.display = 'none';
+            chatToggle.style.display = 'flex';
+        });
+
+        // Send message
+        function handleSendMessage() {
+            const message = messageInput.value.trim();
+            if (message) {
+                // Add user message
+                const userMessage = document.createElement('div');
+                userMessage.className = 'message sent';
+                userMessage.textContent = message;
+                chatMessages.appendChild(userMessage);
+
+                // Clear input
+                messageInput.value = '';
+
+                // Auto scroll to bottom
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                // Simulate response after 1 second
+                setTimeout(() => {
+                    const botMessage = document.createElement('div');
+                    botMessage.className = 'message received';
+                    botMessage.textContent = getAutoResponse(message);
+                    chatMessages.appendChild(botMessage);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 1000);
+            }
+        }
+
+        // Send message on button click
+        sendMessage.addEventListener('click', handleSendMessage);
+
+        // Send message on Enter key
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                handleSendMessage();
+            }
+        });
+
+        // Auto responses
+        function getAutoResponse(message) {
+            message = message.toLowerCase();
+            if (message.includes('hello') || message.includes('hi')) {
+                return 'Hello! How can I help you today?';
+            } else if (message.includes('price')) {
+                return 'Our prices vary depending on the product. You can check specific prices in the product details.';
+            } else if (message.includes('delivery')) {
+                return 'We offer delivery within 3-5 business days for most locations.';
+            } else if (message.includes('payment')) {
+                return 'We accept all major credit cards, UPI, and net banking.';
+            } else {
+                return 'Thank you for your message! Our team will get back to you soon.';
+            }
+        }
+
+        // Show notification badge occasionally
+        setInterval(() => {
+            if (chatWindow.style.display === 'none') {
+                chatBadge.style.display = 'flex';
+            }
+        }, 30000);
+    </script>
+</body>
+</html>

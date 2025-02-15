@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sahasra - Profile</title>
+    <link rel="icon" type="image/png" href="sahasralogo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #C68961;
+            --text-color: #333;
+            --border-color: #ddd;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            padding: 2rem;
+        }
+
+        .profile-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .profile-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .profile-picture-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 1rem;
+        }
+
+        .profile-picture {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid white;
+        }
+
+        .picture-upload {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            background: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--primary-color);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            background: white;
+        }
+
+        .tab {
+            padding: 1rem 2rem;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            color: var(--text-color);
+        }
+
+        .tab.active {
+            border-bottom-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .tab-content {
+            padding: 2rem;
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+
+        .button:hover {
+            background: #b57951;
+        }
+
+        .settings-section {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .settings-section h3 {
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .back-button {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <button class="back-button" onclick="window.location.href='index.html'">
+        <i class="fas fa-arrow-left"></i> Back to Home
+    </button>
+
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-picture-container">
+                <img src="default-profile.png" alt="Profile Picture" class="profile-picture" id="profilePicture">
+                <label for="pictureInput" class="picture-upload">
+                    <i class="fas fa-camera"></i>
+                </label>
+                <input type="file" id="pictureInput" hidden accept="image/*">
+            </div>
+            <h1>Profile Settings</h1>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" data-tab="profile">Profile</div>
+            <div class="tab" data-tab="address">Address</div>
+            <div class="tab" data-tab="settings">Settings</div>
+        </div>
+
+        <div class="tab-content active" id="profile">
+            <form id="profileForm">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email (Optional)</label>
+                    <input type="email" id="email" name="email">
+                </div>
+
+                <div class="form-group">
+                    <label for="mobile">Mobile Number</label>
+                    <input type="tel" id="mobile" name="mobile" pattern="[0-9]{10}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="aadhar">Aadhar Number (for eKYC)</label>
+                    <input type="text" id="aadhar" name="aadhar" pattern="[0-9]{12}" required>
+                </div>
+
+                <button type="submit" class="button">Save Profile</button>
+            </form>
+        </div>
+
+        <div class="tab-content" id="address">
+            <form id="addressForm">
+                <div class="form-group">
+                    <label for="street">Street Address</label>
+                    <input type="text" id="street" name="street" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text" id="city" name="city" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="state">State</label>
+                    <input type="text" id="state" name="state" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="pincode">PIN Code</label>
+                    <input type="text" id="pincode" name="pincode" pattern="[0-9]{6}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="landmark">Landmark (Optional)</label>
+                    <input type="text" id="landmark" name="landmark">
+                </div>
+
+                <button type="submit" class="button">Save Address</button>
+            </form>
+        </div>
+
+        <div class="tab-content" id="settings">
+            <div class="settings-section">
+                <h3>Change Mobile Number</h3>
+                <form id="changeMobileForm">
+                    <div class="form-group">
+                        <label for="currentMobile">Current Mobile Number</label>
+                        <input type="tel" id="currentMobile" name="currentMobile" pattern="[0-9]{10}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="newMobile">New Mobile Number</label>
+                        <input type="tel" id="newMobile" name="newMobile" pattern="[0-9]{10}" required>
+                    </div>
+                    <button type="submit" class="button">Update Mobile Number</button>
+                </form>
+            </div>
+
+            <div class="settings-section">
+                <h3>Change Username</h3>
+                <form id="changeUsernameForm">
+                    <div class="form-group">
+                        <label for="newUsername">New Username</label>
+                        <input type="text" id="newUsername" name="newUsername" required>
+                    </div>
+                    <button type="submit" class="button">Update Username</button>
+                </form>
+            </div>
+
+            <div class="settings-section">
+                <h3>Change Address</h3>
+                <form id="changeAddressForm">
+                    <div class="form-group">
+                        <label for="currentAddress">Current Address</label>
+                        <textarea id="currentAddress" name="currentAddress" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="newAddress">New Address</label>
+                        <textarea id="newAddress" name="newAddress" required></textarea>
+                    </div>
+                    <button type="submit" class="button">Update Address</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching functionality
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabId = tab.getAttribute('data-tab');
+                
+                // Remove active class from all tabs and contents
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Profile picture upload
+        const pictureInput = document.getElementById('pictureInput');
+        const profilePicture = document.getElementById('profilePicture');
+
+        pictureInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    profilePicture.src = e.target.result;
+                    // Save to localStorage
+                    localStorage.setItem('profilePicture', e.target.result);
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Load profile picture from localStorage if exists
+        const savedProfilePicture = localStorage.getItem('profilePicture');
+        if (savedProfilePicture) {
+            profilePicture.src = savedProfilePicture;
+        }
+
+        // Form submission handlers
+        document.getElementById('profileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            localStorage.setItem('profileData', JSON.stringify(data));
+            alert('Profile updated successfully!');
+        });
+
+        document.getElementById('addressForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            localStorage.setItem('addressData', JSON.stringify(data));
+            alert('Address updated successfully!');
+        });
+
+        document.getElementById('changeMobileForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const newMobile = document.getElementById('newMobile').value;
+            const profileData = JSON.parse(localStorage.getItem('profileData') || '{}');
+            profileData.mobile = newMobile;
+            localStorage.setItem('profileData', JSON.stringify(profileData));
+            alert('Mobile number updated successfully!');
+        });
+
+        document.getElementById('changeUsernameForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const newUsername = document.getElementById('newUsername').value;
+            const profileData = JSON.parse(localStorage.getItem('profileData') || '{}');
+            profileData.username = newUsername;
+            localStorage.setItem('profileData', JSON.stringify(profileData));
+            alert('Username updated successfully!');
+        });
+
+        document.getElementById('changeAddressForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const newAddress = document.getElementById('newAddress').value;
+            const addressData = JSON.parse(localStorage.getItem('addressData') || '{}');
+            addressData.fullAddress = newAddress;
+            localStorage.setItem('addressData', JSON.stringify(addressData));
+            alert('Address updated successfully!');
+        });
+
+        // Load saved data on page load
+        window.addEventListener('load', function() {
+            const profileData = JSON.parse(localStorage.getItem('profileData') || '{}');
+            const addressData = JSON.parse(localStorage.getItem('addressData') || '{}');
+
+            // Fill profile form
+            Object.keys(profileData).forEach(key => {
+                const input = document.getElementById(key);
+                if (input) input.value = profileData[key];
+            });
+
+            // Fill address form
+            Object.keys(addressData).forEach(key => {
+                const input = document.getElementById(key);
+                if (input) input.value = addressData[key];
+            });
+        });
+    </script>
+</body>
+</html>

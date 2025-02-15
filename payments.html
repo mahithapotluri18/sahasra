@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sahasra - Payments</title>
+    <link rel="icon" type="image/png" href="sahasralogo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="payments.css">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <style>
+        .page-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            gap: 20px;
+        }
+
+        .back-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #C68961;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: #b57951;
+        }
+
+        .page-header h1 {
+            color: #C68961;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <a href="index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i>
+                Back to Home
+            </a>
+            <h1>Payments</h1>
+        </div>
+        <div class="payment-section">
+            <h2>Make Payment</h2>
+            <div class="payment-form">
+                <div class="form-group">
+                    <label for="amount">Amount (₹)</label>
+                    <input type="number" id="amount" min="1" step="1" placeholder="Enter amount">
+                </div>
+                <div class="form-group">
+                    <label for="purpose">Payment Purpose</label>
+                    <select id="purpose">
+                        <option value="">Select purpose</option>
+                        <option value="service">Service Payment</option>
+                        <option value="product">Product Purchase</option>
+                        <option value="subscription">Subscription</option>
+                    </select>
+                </div>
+                <button id="payButton" class="pay-button">
+                    <i class="fas fa-lock"></i> Pay Securely
+                </button>
+                <div class="payment-methods">
+                    <p>Supported Payment Methods:</p>
+                    <div class="method-icons">
+                        <i class="fas fa-credit-card" title="Credit/Debit Card"></i>
+                        <i class="fas fa-mobile-alt" title="UPI"></i>
+                        <i class="fas fa-university" title="Net Banking"></i>
+                        <i class="fas fa-wallet" title="Wallets"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="history-section">
+            <div class="history-header">
+                <h2>Payment History</h2>
+                <div class="filters">
+                    <div class="date-filter">
+                        <input type="date" id="startDate" placeholder="Start Date">
+                        <input type="date" id="endDate" placeholder="End Date">
+                    </div>
+                    <select id="statusFilter">
+                        <option value="all">All Status</option>
+                        <option value="success">Success</option>
+                        <option value="pending">Pending</option>
+                        <option value="failed">Failed</option>
+                    </select>
+                    <button id="filterButton" class="filter-button">
+                        <i class="fas fa-filter"></i> Apply Filters
+                    </button>
+                </div>
+            </div>
+            <div class="history-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Transaction ID</th>
+                            <th>Date</th>
+                            <th>Purpose</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="paymentHistory">
+                        <!-- Payment history will be dynamically populated -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        const user = JSON.parse(localStorage.getItem('sahasra_user'));
+        if (!user) {
+            window.location.href = 'landing.html';
+        }
+
+        // Initialize Razorpay payment
+        const initPayment = (amount, purpose) => {
+            // Replace with your actual Razorpay key
+            const options = {
+                key: 'YOUR_RAZORPAY_KEY',
+                amount: amount * 100, // Razorpay expects amount in paise
+                currency: 'INR',
+                name: 'Sahasra',
+                description: purpose,
+                image: 'sahasralogo.png',
+                handler: function(response) {
+                    // Handle successful payment
+                    const paymentData = {
+                        transactionId: response.razorpay_payment_id,
+                        amount: amount,
+                        purpose: purpose,
+                        date: new Date().toISOString(),
+                        status: 'success'
+                    };
+                    savePaymentHistory(paymentData);
+                    alert('Payment Successful!');
+                    loadPaymentHistory();
+                },
+                prefill: {
+                    name: user.name,
+                    email: user.email
+                },
+                theme: {
+                    color: '#C68961'
+                }
+            };
+            const rzp = new Razorpay(options);
+            rzp.open();
+        };
+
+        // Handle pay button click
+        document.getElementById('payButton').addEventListener('click', () => {
+            const amount = document.getElementById('amount').value;
+            const purpose = document.getElementById('purpose').value;
+            
+            if (!amount || !purpose) {
+                alert('Please enter amount and select purpose');
+                return;
+            }
+            
+            initPayment(amount, purpose);
+        });
+
+        // Save payment history to localStorage
+        const savePaymentHistory = (payment) => {
+            const history = JSON.parse(localStorage.getItem('payment_history') || '[]');
+            history.push(payment);
+            localStorage.setItem('payment_history', JSON.stringify(history));
+        };
+
+        // Load payment history
+        const loadPaymentHistory = () => {
+            const history = JSON.parse(localStorage.getItem('payment_history') || '[]');
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            const status = document.getElementById('statusFilter').value;
+
+            let filteredHistory = history;
+            
+            if (startDate && endDate) {
+                filteredHistory = filteredHistory.filter(payment => {
+                    const paymentDate = new Date(payment.date);
+                    return paymentDate >= new Date(startDate) && 
+                           paymentDate <= new Date(endDate);
+                });
+            }
+
+            if (status !== 'all') {
+                filteredHistory = filteredHistory.filter(payment => 
+                    payment.status === status
+                );
+            }
+
+            const tbody = document.getElementById('paymentHistory');
+            tbody.innerHTML = filteredHistory.map(payment => `
+                <tr class="status-${payment.status}">
+                    <td>${payment.transactionId}</td>
+                    <td>${new Date(payment.date).toLocaleDateString()}</td>
+                    <td>${payment.purpose}</td>
+                    <td>₹${payment.amount}</td>
+                    <td>
+                        <span class="status-badge ${payment.status}">
+                            ${payment.status.charAt(0).toUpperCase() + payment.status.slice(1)}
+                        </span>
+                    </td>
+                    <td>
+                        <button class="action-button" onclick="downloadReceipt('${payment.transactionId}')">
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        };
+
+        // Download receipt (mock function)
+        const downloadReceipt = (transactionId) => {
+            alert(`Downloading receipt for transaction ${transactionId}`);
+        };
+
+        // Apply filters
+        document.getElementById('filterButton').addEventListener('click', loadPaymentHistory);
+
+        // Initial load
+        loadPaymentHistory();
+
+        // Sync theme with main page
+        const htmlElement = document.documentElement;
+        const savedTheme = localStorage.getItem('sahasra_theme');
+        if (savedTheme) {
+            htmlElement.setAttribute('data-theme', savedTheme);
+        }
+    </script>
+</body>
+</html>

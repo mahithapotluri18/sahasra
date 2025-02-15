@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sahasra - Subcategory</title>
+    <link rel="icon" type="image/png" href="sahasralogo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="subcategory.css">
+    <link rel="stylesheet" href="toast.css">
+    <style>
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #C68961;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: rgba(198, 137, 97, 0.1);
+            transition: all 0.3s;
+            border: 2px solid #C68961;
+        }
+
+        .back-btn:hover {
+            background: rgba(198, 137, 97, 0.2);
+            transform: translateX(-5px);
+        }
+
+        .back-btn i {
+            font-size: 18px;
+        }
+
+        .search-section {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 20px 0;
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .search-container {
+            width: 60%;
+            position: relative;
+        }
+
+        .search-input-group {
+            display: flex;
+            align-items: center;
+            background: white;
+            border: 2px solid #C68961;
+            border-radius: 30px;
+            padding: 5px 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .search-input {
+            flex: 1;
+            border: none;
+            padding: 10px;
+            font-size: 16px;
+            outline: none;
+            background: transparent;
+        }
+
+        .search-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-btn, .voice-btn, .image-btn {
+            background: none;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+        }
+
+        .search-btn:hover, .voice-btn:hover, .image-btn:hover {
+            background-color: rgba(198, 137, 97, 0.1);
+        }
+
+        .search-btn i, .voice-btn i, .image-btn i {
+            font-size: 18px;
+            color: #C68961;
+        }
+
+        .community-chat {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            width: 300px;
+            border: 2px solid #C68961;
+            display: none;
+        }
+
+        .chat-header {
+            padding: 10px;
+            background: #C68961;
+            color: white;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-messages {
+            height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #eee;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 8px;
+            border: 2px solid #C68961;
+            border-radius: 20px;
+            margin-right: 10px;
+        }
+
+        .chat-input button {
+            background: #C68961;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .chat-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #C68961;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="subcategory-page">
+        <div class="subcategory-header">
+            <div class="nav-left">
+                <a href="index.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back to Dashboard</span>
+                </a>
+                <h1 id="subcategoryTitle"></h1>
+            </div>
+            <div class="search-section">
+                <div class="search-container">
+                    <div class="search-input-group">
+                        <input type="text" class="search-input" placeholder="Search in this subcategory...">
+                        <div class="search-buttons">
+                            <button class="voice-btn" title="Voice Search">
+                                <i class="fas fa-microphone"></i>
+                            </button>
+                            <button class="image-btn" title="Image Search">
+                                <i class="fas fa-camera"></i>
+                            </button>
+                            <button class="search-btn">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="option-cards" id="optionCards">
+            <div class="option-card" onclick="showSection('learn')">
+                <i class="fas fa-book"></i>
+                <h3>Learn</h3>
+                <p>Access learning resources and tutorials</p>
+            </div>
+            <div class="option-card" onclick="showSection('purchase')">
+                <i class="fas fa-shopping-cart"></i>
+                <h3>Purchase</h3>
+                <p>Browse and buy products</p>
+            </div>
+            <div class="option-card" onclick="showSection('upload')">
+                <i class="fas fa-upload"></i>
+                <h3>Upload</h3>
+                <p>Share your products</p>
+            </div>
+            <div class="option-card" onclick="showSection('review')">
+                <i class="fas fa-star"></i>
+                <h3>Review</h3>
+                <p>Rate and review products</p>
+            </div>
+        </div>
+
+        <div id="learnSection" class="content-section">
+            <div class="learning-resources">
+                <h2>Learning Resources</h2>
+                <div class="upload-video-section">
+                    <h3>Share Your Knowledge</h3>
+                    <form id="videoUploadForm" class="upload-form">
+                        <div class="form-group">
+                            <label for="videoTitle">Video Title</label>
+                            <input type="text" id="videoTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="videoDescription">Description</label>
+                            <textarea id="videoDescription" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="videoFile">Video File</label>
+                            <input type="file" id="videoFile" accept="video/*" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="videoCover">Cover Image (Optional)</label>
+                            <input type="file" id="videoCover" accept="image/*">
+                        </div>
+                        <button type="submit" class="submit-btn">Upload Video</button>
+                    </form>
+                </div>
+                <div class="filters">
+                    <input type="text" class="filter-input" placeholder="Search resources...">
+                    <select class="sort-select">
+                        <option value="newest">Newest First</option>
+                        <option value="popular">Most Popular</option>
+                        <option value="rating">Highest Rated</option>
+                    </select>
+                </div>
+                <div class="resource-grid" id="resourceGrid">
+                    <!-- Resources will be dynamically populated -->
+                </div>
+            </div>
+        </div>
+
+        <div id="purchaseSection" class="content-section">
+            <div class="filters">
+                <input type="text" class="filter-input" placeholder="Search products...">
+                <select class="sort-select">
+                    <option value="newest">Newest First</option>
+                    <option value="popular">Most Popular</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="price-low">Price: Low to High</option>
+                </select>
+            </div>
+            <div class="product-grid" id="productGrid">
+                <!-- Products will be dynamically populated -->
+            </div>
+        </div>
+
+        <div id="uploadSection" class="content-section">
+            <h2>Upload Your Product</h2>
+            <form id="uploadForm" class="upload-form">
+                <div class="form-group">
+                    <label for="productName">Product Name</label>
+                    <input type="text" id="productName" required>
+                </div>
+                <div class="form-group">
+                    <label for="productDescription">Description</label>
+                    <textarea id="productDescription" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="productPrice">Price (₹)</label>
+                    <input type="number" id="productPrice" required>
+                </div>
+                <div class="form-group">
+                    <label for="productImage">Product Images</label>
+                    <input type="file" id="productImage" accept="image/*" multiple>
+                </div>
+                <button type="submit" class="submit-btn">Upload Product</button>
+            </form>
+        </div>
+
+        <div id="reviewSection" class="content-section">
+            <div class="reviews-container">
+                <h2>Product Reviews</h2>
+                <div class="filters">
+                    <input type="text" class="filter-input" placeholder="Search products to review...">
+                    <select class="sort-select">
+                        <option value="newest">Newest First</option>
+                        <option value="rating-high">Rating: High to Low</option>
+                        <option value="rating-low">Rating: Low to High</option>
+                    </select>
+                </div>
+                <div class="reviews-grid" id="reviewsGrid">
+                    <!-- Reviews will be dynamically populated -->
+                </div>
+            </div>
+        </div>
+
+        <div id="resourceSection" class="content-section">
+            <div class="learning-resources">
+                <h2>Learning Resources</h2>
+                <div class="filters">
+                    <input type="text" class="filter-input" placeholder="Search resources...">
+                    <select class="sort-select">
+                        <option value="newest">Newest First</option>
+                        <option value="popular">Most Popular</option>
+                        <option value="rating">Highest Rated</option>
+                    </select>
+                </div>
+                <div class="resource-grid" id="resourceGrid">
+                    <!-- Resources will be dynamically populated -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Community Chat -->
+        <button class="chat-toggle">
+            <i class="fas fa-comments"></i>
+        </button>
+
+        <div class="community-chat">
+            <div class="chat-header">
+                <span>Community Chat</span>
+                <i class="fas fa-times" id="closeChat"></i>
+            </div>
+            <div class="chat-messages">
+                <!-- Chat messages will be populated here -->
+            </div>
+            <div class="chat-input">
+                <input type="text" placeholder="Type your message...">
+                <button><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        // Sample data structure for subcategories and their products
+        const subcategoryData = {
+            'terrace-gardening': {
+                title: 'Terrace Gardening',
+                resources: [
+                    {
+                        title: 'Getting Started with Terrace Gardening',
+                        description: 'Learn the basics of setting up your terrace garden',
+                        image: 'terrace-garden-basics.jpg',
+                        type: 'video',
+                        duration: '45 mins'
+                    },
+                    {
+                        title: 'Container Gardening Guide',
+                        description: 'Complete guide to growing plants in containers',
+                        image: 'container-guide.jpg',
+                        type: 'course',
+                        duration: '2 hours'
+                    }
+                ],
+                products: [
+                    {
+                        id: 'tg1',
+                        title: 'Vertical Garden Kit',
+                        description: 'Complete kit for starting your vertical garden',
+                        price: 2999,
+                        image: 'vertical-kit.jpg',
+                        rating: 4.5,
+                        subcategory: 'terrace-gardening'
+                    },
+                    {
+                        id: 'tg2',
+                        title: 'Premium Potting Mix',
+                        description: 'Nutrient-rich soil for container plants',
+                        price: 499,
+                        image: 'potting-mix.jpg',
+                        rating: 4.8,
+                        subcategory: 'terrace-gardening'
+                    },
+                    {
+                        id: 'tg3',
+                        title: 'Organic Vegetable Seeds Kit',
+                        description: 'Collection of 15 different vegetable seeds',
+                        price: 799,
+                        image: 'seeds-kit.jpg',
+                        rating: 4.6,
+                        subcategory: 'terrace-gardening'
+                    }
+                ]
+            },
+            'flower-gardening': {
+                title: 'Flower Gardening',
+                resources: [
+                    {
+                        title: 'Seasonal Flower Growing Guide',
+                        description: 'Learn to grow beautiful flowers year-round',
+                        image: 'flower-guide.jpg',
+                        type: 'course',
+                        duration: '3 hours'
+                    }
+                ],
+                products: [
+                    {
+                        id: 'fg1',
+                        title: 'Rose Plant Collection',
+                        description: 'Set of 5 different rose varieties',
+                        price: 1499,
+                        image: 'rose-collection.jpg',
+                        rating: 4.7,
+                        subcategory: 'flower-gardening'
+                    },
+                    {
+                        id: 'fg2',
+                        title: 'Flowering Plant Fertilizer',
+                        description: 'Special blend for flowering plants',
+                        price: 399,
+                        image: 'fertilizer.jpg',
+                        rating: 4.9,
+                        subcategory: 'flower-gardening'
+                    }
+                ]
+            },
+            'poultry-hatching': {
+                title: 'Poultry Hatching',
+                resources: [
+                    {
+                        title: 'Poultry Incubation Basics',
+                        description: 'Learn about egg incubation and hatching',
+                        image: 'incubation-basics.jpg',
+                        type: 'video',
+                        duration: '30 mins'
+                    }
+                ],
+                products: [
+                    {
+                        id: 'ph1',
+                        title: 'Smart Incubator',
+                        description: 'Automatic temperature and humidity control',
+                        price: 5999,
+                        image: 'smart-incubator.jpg',
+                        rating: 4.7,
+                        subcategory: 'poultry-hatching'
+                    },
+                    {
+                        id: 'ph2',
+                        title: 'Hatching Eggs Set',
+                        description: 'Set of 12 fertile eggs',
+                        price: 899,
+                        image: 'hatching-eggs.jpg',
+                        rating: 4.5,
+                        subcategory: 'poultry-hatching'
+                    }
+                ]
+            },
+            'skin-care': {
+                title: 'Skin Care',
+                resources: [
+                    {
+                        title: 'Natural Skincare Guide',
+                        description: 'Learn to make organic skincare products',
+                        image: 'skincare-guide.jpg',
+                        type: 'course',
+                        duration: '2.5 hours'
+                    }
+                ],
+                products: [
+                    {
+                        id: 'sc1',
+                        title: 'Herbal Face Pack',
+                        description: 'Natural ingredients for glowing skin',
+                        price: 299,
+                        image: 'face-pack.jpg',
+                        rating: 4.8,
+                        subcategory: 'skin-care'
+                    },
+                    {
+                        id: 'sc2',
+                        title: 'Organic Face Oil',
+                        description: 'Blend of essential oils for skin',
+                        price: 599,
+                        image: 'face-oil.jpg',
+                        rating: 4.6,
+                        subcategory: 'skin-care'
+                    }
+                ]
+            },
+            'mehandi': {
+                title: 'Mehandi',
+                resources: [
+                    {
+                        title: 'Mehandi Design Course',
+                        description: 'Learn traditional and modern designs',
+                        image: 'mehandi-course.jpg',
+                        type: 'course',
+                        duration: '4 hours'
+                    }
+                ],
+                products: [
+                    {
+                        id: 'm1',
+                        title: 'Natural Mehandi Cones',
+                        description: 'Set of 5 organic mehandi cones',
+                        price: 399,
+                        image: 'mehandi-cones.jpg',
+                        rating: 4.9,
+                        subcategory: 'mehandi'
+                    },
+                    {
+                        id: 'm2',
+                        title: 'Design Stencil Kit',
+                        description: 'Collection of 20 design stencils',
+                        price: 299,
+                        image: 'stencil-kit.jpg',
+                        rating: 4.7,
+                        subcategory: 'mehandi'
+                    }
+                ]
+            },
+            'tailoring': {
+                title: 'Tailoring',
+                resources: [
+                    {
+                        title: 'Basic Stitching Course',
+                        description: 'Learn fundamental stitching techniques',
+                        image: 'stitching-course.jpg',
+                        type: 'course',
+                        duration: '5 hours'
+                    }
+                ],
+                products: [
+                    {
+                        id: 't1',
+                        title: 'Designer Blouse Pieces',
+                        description: 'Set of 3 designer blouse materials',
+                        price: 1299,
+                        image: 'blouse-pieces.jpg',
+                        rating: 4.6,
+                        subcategory: 'tailoring'
+                    },
+                    {
+                        id: 't2',
+                        title: 'Embroidered Dress Material',
+                        description: 'Premium cotton with embroidery',
+                        price: 1599,
+                        image: 'dress-material.jpg',
+                        rating: 4.8,
+                        subcategory: 'tailoring'
+                    }
+                ]
+            },
+            'yoga-meditation': {
+                title: 'Yoga and Meditation',
+                resources: [
+                    {
+                        title: 'Beginner Yoga Course',
+                        description: 'Start your yoga journey',
+                        image: 'yoga-course.jpg',
+                        type: 'course',
+                        duration: '3 hours'
+                    }
+                ],
+                products: [
+                    {
+                        id: 'y1',
+                        title: 'Premium Yoga Mat',
+                        description: 'Eco-friendly non-slip yoga mat',
+                        price: 999,
+                        image: 'yoga-mat.jpg',
+                        rating: 4.8,
+                        subcategory: 'yoga-meditation'
+                    },
+                    {
+                        id: 'y2',
+                        title: 'Meditation Cushion Set',
+                        description: 'Comfortable cushion with mat',
+                        price: 799,
+                        image: 'meditation-set.jpg',
+                        rating: 4.7,
+                        subcategory: 'yoga-meditation'
+                    }
+                ]
+            },
+            'organic-gardening': {
+                title: 'Organic Gardening',
+                resources: [
+                    {
+                        title: 'Organic Farming Fundamentals',
+                        description: 'Learn the basics of organic farming',
+                        image: 'organic-basics.jpg',
+                        type: 'course',
+                        duration: '4 hours'
+                    },
+                    {
+                        title: 'Natural Pest Control',
+                        description: 'Eco-friendly pest management techniques',
+                        image: 'pest-control.jpg',
+                        type: 'video',
+                        duration: '45 mins'
+                    }
+                ],
+                products: [
+                    {
+                        id: 'og1',
+                        title: 'Organic Compost Kit',
+                        description: 'Complete kit for making organic compost',
+                        price: 1499,
+                        image: 'compost-kit.jpg',
+                        rating: 4.8,
+                        subcategory: 'organic-gardening'
+                    },
+                    {
+                        id: 'og2',
+                        title: 'Bio-Pesticide Pack',
+                        description: 'Natural pest control solutions',
+                        price: 699,
+                        image: 'bio-pesticide.jpg',
+                        rating: 4.6,
+                        subcategory: 'organic-gardening'
+                    }
+                ]
+            },
+            'herbal-gardening': {
+                title: 'Herbal Gardening',
+                resources: [
+                    {
+                        title: 'Medicinal Herbs Guide',
+                        description: 'Growing and using medicinal plants',
+                        image: 'herbs-guide.jpg',
+                        type: 'course',
+                        duration: '3 hours'
+                    }
+                ],
+                products: [
+                    {
+                        id: 'hg1',
+                        title: 'Medicinal Herb Seeds Kit',
+                        description: 'Collection of 10 medicinal plant seeds',
+                        price: 899,
+                        image: 'herb-seeds.jpg',
+                        rating: 4.7,
+                        subcategory: 'herbal-gardening'
+                    },
+                    {
+                        id: 'hg2',
+                        title: 'Herb Planter Set',
+                        description: 'Special planters for herbs with markers',
+                        price: 1299,
+                        image: 'herb-planters.jpg',
+                        rating: 4.9,
+                        subcategory: 'herbal-gardening'
+                    }
+                ]
+            },
+            'aqua-culture': {
+                title: 'Aqua Culture',
+                resources: [
+                    {
+                        title: 'Aquaponics Basics',
+                        description: 'Introduction to aquaponics farming',
+                        image: 'aquaponics.jpg',
+                        type: 'course',
+                        duration: '5 hours'
+                    }
+                ],
+                products: [
+                    {
+                        id: 'ac1',
+                        title: 'Aquaponics Starter Kit',
+                        description: 'Complete setup for small aquaponics system',
+                        price: 4999,
+                        image: 'aquaponics-kit.jpg',
+                        rating: 4.8,
+                        subcategory: 'aqua-culture'
+                    },
+                    {
+                        id: 'ac2',
+                        title: 'Fish Feed Pack',
+                        description: 'Premium quality fish feed, 5kg',
+                        price: 799,
+                        image: 'fish-feed.jpg',
+                        rating: 4.6,
+                        subcategory: 'aqua-culture'
+                    }
+                ]
+            },
+            'silkworm-hatching': {
+                title: 'Silkworm Hatching',
+                resources: [
+                    {
+                        title: 'Sericulture Guide',
+                        description: 'Complete guide to silkworm rearing',
+                        image: 'sericulture.jpg',
+                        type: 'course',
+                        duration: '6 hours'
+                    }
+                ],
+                products: [
+                    {
+                        id: 'sh1',
+                        title: 'Silkworm Rearing Kit',
+                        description: 'Complete kit for silkworm cultivation',
+                        price: 2999,
+                        image: 'rearing-kit.jpg',
+                        rating: 4.7,
+                        subcategory: 'silkworm-hatching'
+                    },
+                    {
+                        id: 'sh2',
+                        title: 'Mulberry Saplings',
+                        description: 'Set of 10 mulberry plant saplings',
+                        price: 599,
+                        image: 'mulberry.jpg',
+                        rating: 4.8,
+                        subcategory: 'silkworm-hatching'
+                    }
+                ]
+            },
+            'honeybee-hatching': {
+                title: 'Honeybee Hatching',
+                resources: [
+                    {
+                        title: 'Beekeeping Masterclass',
+                        description: 'Professional beekeeping techniques',
+                        image: 'beekeeping.jpg',
+                        type: 'course',
+                        duration: '8 hours'
+                    }
+                ],
+                products: [
+                    {
+                        id: 'hh1',
+                        title: 'Beekeeping Starter Kit',
+                        description: 'Complete beekeeping equipment set',
+                        price: 5999,
+                        image: 'beekeeping-kit.jpg',
+                        rating: 4.9,
+                        subcategory: 'honeybee-hatching'
+                    },
+                    {
+                        id: 'hh2',
+                        title: 'Honey Processing Unit',
+                        description: 'Small-scale honey extraction setup',
+                        price: 3999,
+                        image: 'honey-process.jpg',
+                        rating: 4.7,
+                        subcategory: 'honeybee-hatching'
+                    }
+                ]
+            },
+            'embroidery': {
+                title: 'Embroidery',
+                resources: [
+                    {
+                        title: 'Advanced Embroidery Course',
+                        description: 'Master complex embroidery patterns',
+                        image: 'embroidery-course.jpg',
+                        type: 'course',
+                        duration: '10 hours'
+                    }
+                ],
+                products: [
+                    {
+                        id: 'em1',
+                        title: 'Professional Embroidery Kit',
+                        description: 'Complete set of embroidery tools',
+                        price: 2499,
+                        image: 'embroidery-kit.jpg',
+                        rating: 4.8,
+                        subcategory: 'embroidery'
+                    },
+                    {
+                        id: 'em2',
+                        title: 'Designer Thread Collection',
+                        description: 'Set of 50 premium embroidery threads',
+                        price: 999,
+                        image: 'thread-set.jpg',
+                        rating: 4.9,
+                        subcategory: 'embroidery'
+                    }
+                ]
+            },
+            'homebytes': {
+                title: 'HomeBytes',
+                resources: [
+                    {
+                        title: 'Smart Home Setup Guide',
+                        description: 'DIY smart home automation',
+                        image: 'smart-home.jpg',
+                        type: 'course',
+                        duration: '4 hours'
+                    },
+                    {
+                        title: 'IoT Device Programming',
+                        description: 'Learn to program smart home devices',
+                        image: 'iot-programming.jpg',
+                        type: 'course',
+                        duration: '6 hours'
+                    },
+                    {
+                        title: 'Home Network Security',
+                        description: 'Secure your smart home network',
+                        image: 'network-security.jpg',
+                        type: 'video',
+                        duration: '2 hours'
+                    }
+                ],
+                products: [
+                    {
+                        id: 'hb1',
+                        title: 'Smart Home Hub',
+                        description: 'Central control for all smart devices',
+                        price: 7999,
+                        image: 'smart-hub.jpg',
+                        rating: 4.8,
+                        subcategory: 'homebytes'
+                    },
+                    {
+                        id: 'hb2',
+                        title: 'Security Camera System',
+                        description: 'WiFi-enabled security cameras',
+                        price: 4999,
+                        image: 'security-cam.jpg',
+                        rating: 4.7,
+                        subcategory: 'homebytes'
+                    },
+                    {
+                        id: 'hb3',
+                        title: 'Smart Lighting Kit',
+                        description: 'Voice-controlled LED lighting system',
+                        price: 2999,
+                        image: 'smart-lights.jpg',
+                        rating: 4.6,
+                        subcategory: 'homebytes'
+                    }
+                ]
+            },
+            'beauticians': {
+                title: 'Beauticians',
+                resources: [
+                    {
+                        title: 'Professional Beauty Course',
+                        description: 'Complete beauty therapy certification',
+                        image: 'beauty-course.jpg',
+                        type: 'course',
+                        duration: '40 hours'
+                    },
+                    {
+                        title: 'Advanced Makeup Techniques',
+                        description: 'Master professional makeup application',
+                        image: 'makeup-course.jpg',
+                        type: 'course',
+                        duration: '20 hours'
+                    },
+                    {
+                        title: 'Skincare Specialist Training',
+                        description: 'Learn advanced skincare treatments',
+                        image: 'skincare-course.jpg',
+                        type: 'course',
+                        duration: '15 hours'
+                    }
+                ],
+                products: []
+            },
+            'healers': {
+                title: 'Healers',
+                resources: [
+                    {
+                        title: 'Ayurvedic Healing Fundamentals',
+                        description: 'Learn traditional Ayurvedic practices',
+                        image: 'ayurveda-course.jpg',
+                        type: 'course',
+                        duration: '30 hours'
+                    },
+                    {
+                        title: 'Natural Remedies Workshop',
+                        description: 'Create effective natural medicines',
+                        image: 'remedies-course.jpg',
+                        type: 'course',
+                        duration: '25 hours'
+                    },
+                    {
+                        title: 'Holistic Healing Methods',
+                        description: 'Comprehensive guide to holistic healing',
+                        image: 'holistic-course.jpg',
+                        type: 'course',
+                        duration: '35 hours'
+                    }
+                ],
+                products: []
+            },
+        };
+
+        // Get subcategory from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const subcategory = urlParams.get('subcategory');
+        const category = urlParams.get('category');
+
+        // Check login status
+        function checkLogin() {
+            const user = JSON.parse(localStorage.getItem('sahasra_user'));
+            if (!user) {
+                window.location.href = 'landing.html';
+            }
+            return user;
+        }
+
+        // Initialize page
+        function initPage() {
+            const user = checkLogin();
+            if (!user) return;
+
+            const subcategoryData = getSubcategoryData(category, subcategory);
+            if (subcategoryData) {
+                document.getElementById('subcategoryTitle').textContent = subcategoryData.title;
+                loadResources(subcategoryData.resources);
+                loadProducts(subcategoryData.products);
+            }
+        }
+
+        // Back button functionality
+        function goBack() {
+            window.location.href = `category-template.html?category=${category}`;
+        }
+
+        // Load resources
+        function loadResources(resources) {
+            const resourceGrid = document.getElementById('resourceGrid');
+            resourceGrid.innerHTML = resources.map(resource => `
+                <div class="resource-card">
+                    <img src="${resource.image}" alt="${resource.title}" class="resource-image">
+                    <div class="resource-content">
+                        <h3 class="resource-title">${resource.title}</h3>
+                        <p class="resource-description">${resource.description}</p>
+                        <div class="resource-meta">
+                            <span><i class="fas fa-${resource.type === 'video' ? 'video' : 'book'}"></i> ${resource.type}</span>
+                            <span><i class="fas fa-clock"></i> ${resource.duration}</span>
+                        </div>
+                        <button class="btn btn-primary" onclick="startLearning('${resource.title}')">Start Learning</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Load showcase products
+        function loadShowcaseProducts(products) {
+            const showcaseGrid = document.getElementById('showcaseGrid');
+            showcaseGrid.innerHTML = products.map(product => `
+                <div class="product-card">
+                    <img src="${product.image}" alt="${product.title}" class="product-image">
+                    <div class="product-content">
+                        <h3 class="product-title">${product.title}</h3>
+                        <p class="product-description">${product.description}</p>
+                        <div class="product-price">₹${product.price}</div>
+                        <div class="product-actions">
+                            <button class="btn btn-primary" onclick="editProduct('${product.id}')">Edit</button>
+                            <button class="btn btn-secondary" onclick="removeProduct('${product.id}')">Remove</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Load consumer products
+        function loadConsumerProducts(products) {
+            const productGrid = document.getElementById('productGrid');
+            productGrid.innerHTML = products.map(product => `
+                <div class="product-card">
+                    <img src="${product.image}" alt="${product.title}" class="product-image">
+                    <div class="product-content">
+                        <h3 class="product-title">${product.title}</h3>
+                        <p class="product-description">${product.description}</p>
+                        <div class="product-price">₹${product.price}</div>
+                        <div class="product-rating">
+                            <i class="fas fa-star"></i> ${product.rating}
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn btn-primary" onclick="cart.addItem(${JSON.stringify(product)})">
+                                Add to Cart
+                            </button>
+                            <button class="btn btn-secondary" onclick="viewProductDetails('${product.id}')">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Product actions
+        function startLearning(title) {
+            alert(`Starting course: ${title}`);
+        }
+
+        function editProduct(productId) {
+            alert(`Editing product: ${productId}`);
+        }
+
+        function removeProduct(productId) {
+            alert(`Removing product: ${productId}`);
+        }
+
+        function viewProductDetails(productId) {
+            const subcategoryData = window.subcategoryData[subcategory];
+            const product = subcategoryData.products.find(p => p.id === productId);
+            
+            if (product) {
+                const detailsHtml = `
+                    <div style="padding: 20px;">
+                        <h2>${product.title}</h2>
+                        <img src="${product.image}" alt="${product.title}" style="max-width: 300px;">
+                        <p>${product.description}</p>
+                        <p>Price: ₹${product.price}</p>
+                        <p>Rating: ${product.rating} <i class="fas fa-star"></i></p>
+                        <button onclick="cart.addItem(${JSON.stringify(product)})">Add to Cart</button>
+                    </div>
+                `;
+                
+                // You can replace this with a modal implementation
+                const popup = window.open('', 'Product Details', 'width=400,height=600');
+                popup.document.write(detailsHtml);
+            }
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                ${message}
+            `;
+            document.getElementById('toastContainer').appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.animation = 'slideOut 0.3s ease-out forwards';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Override cart's addItem method to show toast
+        const originalAddItem = cart.addItem;
+        cart.addItem = function(product) {
+            originalAddItem.call(this, product);
+            showToast(`${product.title} added to cart!`);
+        };
+
+        // Show selected section
+        function showSection(section) {
+            document.querySelectorAll('.content-section').forEach(el => el.style.display = 'none');
+            
+            // Show selected section
+            const sectionElement = document.getElementById(section + 'Section');
+            if (sectionElement) {
+                sectionElement.style.display = 'block';
+            }
+
+            // Update active state of option cards
+            document.querySelectorAll('.option-card').forEach(card => {
+                card.classList.remove('active');
+                if (card.querySelector('h3').textContent.toLowerCase() === section) {
+                    card.classList.add('active');
+                }
+            });
+        }
+
+        // Toggle community chat
+        function toggleChat() {
+            const chatContainer = document.getElementById('chatContainer');
+            chatContainer.style.display = chatContainer.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Send message in community chat
+        function sendMessage() {
+            const messageInput = document.getElementById('messageInput');
+            const message = messageInput.value.trim();
+            if (message) {
+                const chatMessages = document.getElementById('chatMessages');
+                chatMessages.innerHTML += `
+                    <div class="chat-message">
+                        <span class="message-text">${message}</span>
+                        <span class="message-time">Just now</span>
+                    </div>
+                `;
+                messageInput.value = '';
+            }
+        }
+
+        // Voice search functionality
+        const voiceSearchBtn = document.querySelector('.voice-btn');
+        voiceSearchBtn.addEventListener('click', () => {
+            if ('webkitSpeechRecognition' in window) {
+                const recognition = new webkitSpeechRecognition();
+                recognition.continuous = false;
+                recognition.interimResults = false;
+
+                recognition.onresult = (event) => {
+                    const transcript = event.results[0][0].transcript;
+                    document.querySelector('.search-input').value = transcript;
+                    performSearch(transcript);
+                };
+
+                recognition.start();
+            } else {
+                alert('Voice search is not supported in your browser');
+            }
+        });
+
+        // Search functionality
+        const searchInput = document.querySelector('.search-input');
+        searchInput.addEventListener('input', (e) => {
+            performSearch(e.target.value);
+        });
+
+        function performSearch(query) {
+            const items = document.querySelectorAll('.subcategory-item');
+            query = query.toLowerCase();
+
+            items.forEach(item => {
+                const title = item.querySelector('h3').textContent.toLowerCase();
+                const description = item.querySelector('p').textContent.toLowerCase();
+
+                if (title.includes(query) || description.includes(query)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Community Chat
+        const chatToggle = document.querySelector('.chat-toggle');
+        const chatWindow = document.querySelector('.community-chat');
+        const closeChat = document.getElementById('closeChat');
+        const chatInput = document.querySelector('.chat-input input');
+        const chatSend = document.querySelector('.chat-input button');
+        const chatMessages = document.querySelector('.chat-messages');
+
+        chatToggle.addEventListener('click', () => {
+            chatWindow.style.display = chatWindow.style.display === 'none' ? 'block' : 'none';
+            chatToggle.style.display = 'none';
+        });
+
+        closeChat.addEventListener('click', () => {
+            chatWindow.style.display = 'none';
+            chatToggle.style.display = 'block';
+        });
+
+        chatSend.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        function sendMessage() {
+            const message = chatInput.value.trim();
+            if (message) {
+                const messageElement = document.createElement('div');
+                messageElement.style.padding = '5px 10px';
+                messageElement.style.margin = '5px';
+                messageElement.style.background = '#f0f0f0';
+                messageElement.style.borderRadius = '10px';
+                messageElement.textContent = `You: ${message}`;
+                chatMessages.appendChild(messageElement);
+                chatInput.value = '';
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        }
+
+        // Initialize page when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            initPage();
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const category = urlParams.get('category');
+            
+            // Show different options based on category
+            const optionCards = document.getElementById('optionCards');
+            if (category === 'beauticians' || category === 'healers') {
+                // Keep the original produce/consume options
+                optionCards.innerHTML = `
+                    <div class="option-card" onclick="showSection('produce')">
+                        <i class="fas fa-industry"></i>
+                        <h3>Produce</h3>
+                        <p>Learn and showcase your products</p>
+                    </div>
+                    <div class="option-card" onclick="showSection('consume')">
+                        <i class="fas fa-shopping-basket"></i>
+                        <h3>Consume</h3>
+                        <p>Browse and purchase available products</p>
+                    </div>
+                `;
+                showSection('consume'); // Default section for beauticians and healers
+            } else {
+                // Show new options for other categories
+                showSection('learn'); // Default section for other categories
+            }
+
+            // Handle upload form submission
+            const uploadForm = document.getElementById('uploadForm');
+            if (uploadForm) {
+                uploadForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    // Add your upload logic here
+                    showToast('Product uploaded successfully!', 'success');
+                    uploadForm.reset();
+                });
+            }
+        });
+
+        // Sync theme with main page
+        const htmlElement = document.documentElement;
+        const savedTheme = localStorage.getItem('sahasra_theme');
+        if (savedTheme) {
+            htmlElement.setAttribute('data-theme', savedTheme);
+        }
+    </script>
+</body>
+</html>
