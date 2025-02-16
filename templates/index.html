@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sahasra - Dashboard</title>
-    <link rel="icon" type="image/png" href="sahasralogo.png">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/sahasralogo.png') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <header class="dashboard-header">
@@ -46,7 +46,7 @@
         <div class="header-right">
             <div class="user-profile">
                 <div class="profile-trigger">
-                    <img src="profile-placeholder.jpg" alt="Profile" class="profile-img" id="profileImage">
+                    <img src="{{ url_for('static', filename='images/profile-placeholder.jpg') }}" alt="Profile" class="profile-img" id="profileImage">
                     <div class="profile-info">
                         <span class="username" id="profileName">User</span>
                         <span class="user-status">Online</span>
@@ -165,7 +165,8 @@
         </div>
     </div>
 
-    <script src="cart.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/cart.js') }}"></script>
     <script>
         // Load user profile
         function loadUserProfile() {

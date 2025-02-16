@@ -1,9 +1,11 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from datetime import datetime
 
-app = Flask(__name__)
+app = Flask(__name__,
+            static_folder='static',
+            template_folder='templates')
 CORS(app)
 
 # Basic Configuration
@@ -30,6 +32,11 @@ class Service(db.Model):
     description = db.Column(db.Text)
     location = db.Column(db.String(200))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+# Routes
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 # Test route
 @app.route('/api/test', methods=['GET'])
@@ -72,4 +79,9 @@ def register():
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
+    # Development server
     app.run(debug=True, port=5000)
+else:
+    # Production using Gunicorn
+    with app.app_context():
+        db.create_all()
