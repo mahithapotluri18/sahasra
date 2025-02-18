@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart - Sahasra</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #C68961;
+            --primary-dark: #b57951;
+            --text-color: #333;
+            --bg-color: #f8f9fa;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --hover-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background: white;
+            padding: 1rem;
+            box-shadow: var(--card-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            color: var(--primary-color);
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+        }
+
+        .user-menu {
+            position: relative;
+        }
+
+        .user-menu img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .menu-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 5px;
+            box-shadow: var(--card-shadow);
+            min-width: 200px;
+            display: none;
+        }
+
+        .menu-dropdown.show {
+            display: block;
+        }
+
+        .menu-dropdown a {
+            display: block;
+            padding: 0.8rem 1rem;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: background-color 0.3s;
+        }
+
+        .menu-dropdown a:hover {
+            background-color: var(--bg-color);
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .dashboard-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .count {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin: 1rem 0;
+        }
+
+        .list {
+            margin-top: 1rem;
+        }
+
+        .list-item {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .list-item:last-child {
+            border-bottom: none;
+        }
+
+        .status {
+            color: #28a745;
+        }
+
+        .rating {
+            color: gold;
+        }
+
+        .btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="#" class="logo">
+                <img src="sahasralogo.png" alt="Sahasra Logo">
+                <h1>Sahasra</h1>
+            </a>
+            <div class="user-menu">
+                <img src="profile-placeholder.png" alt="User" id="userMenuBtn">
+                <div class="menu-dropdown" id="userMenu">
+                    <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+                    <a href="#settings"><i class="fas fa-cog"></i> Settings</a>
+                    <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="dashboard">
+        <div class="dashboard-card">
+            <h3><i class="fas fa-video"></i> Uploaded Videos</h3>
+            <div class="count">0</div>
+            <div class="list">
+                <div class="list-item">No videos uploaded yet</div>
+            </div>
+        </div>
+
+        <div class="dashboard-card">
+            <h3><i class="fas fa-star"></i> Reviews & Ratings</h3>
+            <div class="rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="far fa-star"></i>
+                <span>(4.0)</span>
+            </div>
+            <div class="list">
+                <div class="list-item">
+                    <span>Overall Rating</span>
+                    <span>4.0/5</span>
+                </div>
+                <div class="list-item">
+                    <span>Total Reviews</span>
+                    <span>0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-card">
+            <h3><i class="fas fa-history"></i> Payment History</h3>
+            <div class="count">₹0</div>
+            <div class="list">
+                <div class="list-item">No transactions yet</div>
+            </div>
+        </div>
+
+        <div class="dashboard-card">
+            <h3><i class="fas fa-heart"></i> Interested Sections</h3>
+            <div class="list">
+                <div class="list-item">No interests added</div>
+            </div>
+        </div>
+
+        <div class="dashboard-card">
+            <h3><i class="fas fa-thumbs-up"></i> Liked Videos</h3>
+            <div class="count">0</div>
+            <div class="list">
+                <div class="list-item">No liked videos</div>
+            </div>
+        </div>
+
+        <div class="dashboard-card">
+            <h3><i class="fas fa-chart-line"></i> Activity</h3>
+            <div class="list">
+                <div class="list-item">
+                    <span>Last Login</span>
+                    <span id="lastLogin">Just now</span>
+                </div>
+                <div class="list-item">
+                    <span>Account Status</span>
+                    <span class="status">Active</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle user menu
+        const userMenuBtn = document.getElementById('userMenuBtn');
+        const userMenu = document.getElementById('userMenu');
+
+        userMenuBtn.addEventListener('click', () => {
+            userMenu.classList.toggle('show');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!userMenuBtn.contains(e.target) && !userMenu.contains(e.target)) {
+                userMenu.classList.remove('show');
+            }
+        });
+
+        // Check login status
+        function checkLogin() {
+            const user = localStorage.getItem('sahasra_user');
+            if (!user) {
+                window.location.href = 'landing.html';
+                return null;
+            }
+            return JSON.parse(user);
+        }
+
+        // Update UI with user data
+        function updateUI(user) {
+            const lastLoginElem = document.getElementById('lastLogin');
+            if (user.lastLogin) {
+                const loginDate = new Date(user.lastLogin);
+                lastLoginElem.textContent = loginDate.toLocaleString();
+            }
+        }
+
+        // Logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            localStorage.removeItem('sahasra_user');
+            window.location.href = 'landing.html';
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = checkLogin();
+            if (user) {
+                updateUI(user);
+            }
+        });
+    </script>
+</body>
+</html>

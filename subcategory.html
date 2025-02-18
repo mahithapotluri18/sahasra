@@ -1,0 +1,1671 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sahasra - Subcategory</title>
+    <link rel="icon" type="image/png" href="sahasralogo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="subcategory.css">
+    <link rel="stylesheet" href="toast.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <style>
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #C68961;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: rgba(198, 137, 97, 0.1);
+            transition: all 0.3s;
+            border: 2px solid #C68961;
+        }
+
+        .back-btn:hover {
+            background: rgba(198, 137, 97, 0.2);
+            transform: translateX(-5px);
+        }
+
+        .back-btn i {
+            font-size: 18px;
+        }
+
+        .community-chat {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            width: 300px;
+            border: 2px solid #C68961;
+            display: none;
+        }
+
+        .chat-header {
+            padding: 10px;
+            background: #C68961;
+            color: white;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-messages {
+            height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #eee;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 8px;
+            border: 2px solid #C68961;
+            border-radius: 20px;
+            margin-right: 10px;
+        }
+
+        .chat-input button {
+            background: #C68961;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .chat-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #C68961;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: 250px;
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .product-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .product-description {
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            color: #666;
+        }
+
+        .product-price {
+            font-size: 1.2rem;
+            color: #C68961;
+            margin-bottom: 1rem;
+        }
+
+        .product-stock {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .seller-details {
+            margin-bottom: 1rem;
+        }
+
+        .product-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: #f5f5f5;
+            padding: 5px;
+            border-radius: 20px;
+        }
+
+        .quantity-btn {
+            background: #C68961;
+            color: white;
+            border: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            padding: 0;
+        }
+
+        .quantity-btn:hover {
+            background: #a06c46;
+        }
+
+        .quantity-input {
+            width: 40px;
+            height: 25px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            font-size: 14px;
+            padding: 0 5px;
+            background: white;
+        }
+
+        .quantity-input::-webkit-inner-spin-button,
+        .quantity-input::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .quantity-input:focus {
+            outline: none;
+            border-color: #C68961;
+        }
+
+        .add-to-cart-btn {
+            background: #C68961;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .add-to-cart-btn:hover {
+            background: #a06c46;
+            transform: translateY(-2px);
+        }
+
+        .add-to-cart-btn.added {
+            background: #4CAF50;
+        }
+
+        .view-btn, .add-to-cart-btn {
+            flex: 1;
+            padding: 0.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .view-btn {
+            background-color: rgba(198, 137, 97, 0.1);
+            color: #C68961;
+        }
+
+        .view-btn:hover {
+            background-color: rgba(198, 137, 97, 0.2);
+        }
+
+        .product-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .modal-image {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .upload-date {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        .no-products {
+            text-align: center;
+            color: #666;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+
+        .image-preview {
+            margin-top: 10px;
+            max-width: 200px;
+            max-height: 200px;
+            overflow: hidden;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background-color: #C68961;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.2s;
+        }
+
+        .submit-btn:hover {
+            background-color: #b57850;
+        }
+
+        .delete-btn {
+            background-color: #ff4444;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            width: 100%;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .delete-btn:hover {
+            background-color: #cc0000;
+        }
+
+        .product-uploader {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .no-products {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            margin: 1rem;
+        }
+        
+        .resource-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: 250px;
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .video-thumbnail {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        
+        .video-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .video-meta {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .play-btn {
+            background-color: #C68961;
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        .play-btn:hover {
+            background-color: #b57951;
+        }
+        
+        .video-player {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .player-overlay {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .player-content {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .close-player {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .section-tabs {
+            display: flex;
+            gap: 10px;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tab-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px 4px 0 0;
+            cursor: pointer;
+            background: #f0f0f0;
+            color: #333;
+            transition: background-color 0.2s;
+        }
+        
+        .tab-btn.active {
+            background: white;
+            border-bottom: 2px solid #C68961;
+        }
+        
+        .tab-content {
+            padding: 20px;
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+
+        .review-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .review-form {
+            margin-bottom: 20px;
+        }
+
+        .review-select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+
+        .rating {
+            font-size: 24px;
+            color: #ffd700;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+
+        .reviews-container {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .review-card {
+            background: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .review-stars {
+            color: #ffd700;
+            margin-bottom: 5px;
+        }
+
+        .search-input-group {
+            display: flex;
+            align-items: center;
+            background: var(--bg-color);
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            padding: 8px 16px;
+            margin: 1rem;
+            width: 300px;
+        }
+
+        .search-input-group i {
+            color: var(--primary-color);
+            margin-right: 8px;
+        }
+
+        #searchInput {
+            border: none;
+            background: none;
+            padding: 8px;
+            font-size: 16px;
+            outline: none;
+            width: 100%;
+            color: var(--text-color);
+        }
+
+        #searchInput::placeholder {
+            color: var(--text-muted);
+        }
+
+        /* Language controls styles */
+        .language-controls {
+            position: relative;
+            margin-left: 1rem;
+        }
+
+        .lang-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border: none;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .lang-btn:hover {
+            background-color: var(--primary-hover-color);
+        }
+
+        .lang-btn i {
+            font-size: 16px;
+        }
+
+        #currentLang {
+            font-weight: 500;
+        }
+
+        .language-options {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: none;
+            z-index: 1000;
+            min-width: 120px;
+            margin-top: 5px;
+        }
+
+        .language-options.show {
+            display: block;
+        }
+
+        .language-option {
+            padding: 10px 15px;
+            cursor: pointer;
+            color: var(--text-color);
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .language-option:first-child {
+            border-radius: 8px 8px 0 0;
+        }
+
+        .language-option:last-child {
+            border-radius: 0 0 8px 8px;
+        }
+
+        .language-option:hover {
+            background-color: var(--hover-color);
+        }
+
+        /* Responsive layout adjustments */
+        @media screen and (min-width: 1024px) {
+            .subcategory-header {
+                padding: 1rem 4rem;
+            }
+            .content-section {
+                padding: 2rem 4rem;
+            }
+            .product-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 2rem;
+            }
+        }
+
+        @media screen and (min-width: 768px) and (max-width: 1023px) {
+            .subcategory-header {
+                padding: 1rem 2rem;
+            }
+            .content-section {
+                padding: 2rem;
+            }
+            .product-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1.5rem;
+            }
+        }
+
+        @media screen and (max-width: 767px) {
+            .subcategory-header {
+                padding: 1rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .nav-left, .nav-right {
+                width: 100%;
+                justify-content: space-between;
+            }
+            .content-section {
+                padding: 1rem;
+            }
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+        }
+    </style>
+    <script src="js/translations.js"></script>
+    <script src="js/theme-manager.js"></script>
+</head>
+<body>
+    <div class="subcategory-page">
+        <div class="subcategory-header">
+            <div class="nav-left">
+                <a href="index.html" class="back-btn" data-translate="backToDashboard">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back to Dashboard</span>
+                </a>
+                <h1 id="subcategoryTitle" data-translate="subcategoryTitle"></h1>
+                <div class="search-input-group">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search products..." data-translate="searchProducts">
+                </div>
+            </div>
+            <div class="nav-right">
+                <div class="theme-mode-controls">
+                    <button class="control-btn" onclick="toggleTheme()" title="Toggle Theme" data-translate="toggleTheme">
+                        <i id="themeIcon" class="fas fa-moon"></i>
+                    </button>
+                    <button class="control-btn" onclick="toggleViewMode()" title="Toggle View Mode" data-translate="toggleMode">
+                        <i id="modeIcon" class="fas fa-mobile-alt"></i>
+                    </button>
+                    <div class="language-dropdown">
+                        <button id="languageBtn" class="lang-btn">
+                            <i class="fas fa-globe"></i>
+                            <span id="currentLang">EN</span>
+                        </button>
+                        <div id="languageOptions" class="language-options">
+                            <div class="language-option" onclick="changeLanguage('en')">English</div>
+                            <div class="language-option" onclick="changeLanguage('te')">తెలుగు</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cart-icon">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="option-cards" id="optionCards">
+            <div class="option-card" onclick="showSection('learn')">
+                <i class="fas fa-book"></i>
+                <h3>Learn</h3>
+                <p>Access learning resources and tutorials</p>
+            </div>
+            <div class="option-card" onclick="showSection('purchase')">
+                <i class="fas fa-shopping-cart"></i>
+                <h3>Purchase</h3>
+                <p>Browse and buy products</p>
+            </div>
+            <div class="option-card" onclick="showSection('upload')">
+                <i class="fas fa-upload"></i>
+                <h3>Upload</h3>
+                <p>Share your products</p>
+            </div>
+            <div class="option-card" onclick="showSection('review')">
+                <i class="fas fa-star"></i>
+                <h3>Review</h3>
+                <p>Rate and review products</p>
+            </div>
+            <div class="option-card" onclick="showSection('details')">
+                <i class="fas fa-info-circle"></i>
+                <h3>Details</h3>
+                <p>View your uploaded products</p>
+            </div>
+        </div>
+
+        <div id="learnSection" class="content-section">
+            <div class="learning-resources">
+                <h2>Learning Resources</h2>
+                <div class="upload-video-section">
+                    <h3>Share Your Knowledge</h3>
+                    <form id="videoUploadForm" class="upload-form">
+                        <div class="form-group">
+                            <label for="videoTitle">Video Title</label>
+                            <input type="text" id="videoTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="videoDescription">Description</label>
+                            <textarea id="videoDescription" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="videoFile">Video File</label>
+                            <input type="file" id="videoFile" accept="video/*" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="videoCover">Cover Image (Optional)</label>
+                            <input type="file" id="videoCover" accept="image/*">
+                        </div>
+                        <button type="submit" class="submit-btn">Upload Video</button>
+                    </form>
+                </div>
+                <div class="filters">
+                    <input type="text" class="filter-input" placeholder="Search resources...">
+                    <select class="sort-select">
+                        <option value="newest">Newest First</option>
+                        <option value="popular">Most Popular</option>
+                        <option value="rating">Highest Rated</option>
+                    </select>
+                </div>
+                <div class="resource-grid" id="resourceGrid">
+                    <!-- Resources will be dynamically populated -->
+                </div>
+            </div>
+        </div>
+
+        <div id="purchaseSection" class="content-section">
+            <div class="filters">
+                <input type="text" class="filter-input" placeholder="Search products...">
+                <select class="sort-select">
+                    <option value="newest">Newest First</option>
+                    <option value="popular">Most Popular</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="price-low">Price: Low to High</option>
+                </select>
+            </div>
+            <div id="productsContainer" class="products-container">
+                <!-- Products will be loaded here -->
+            </div>
+        </div>
+
+        <div id="uploadSection" class="content-section">
+            <h2>Upload Your Product</h2>
+            <form id="uploadForm" class="upload-form">
+                <div class="form-group">
+                    <label for="productName">Product Name</label>
+                    <input type="text" id="productName" name="productName" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="price">Price (₹)</label>
+                    <input type="number" id="price" name="price" min="0" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="stock">Stock</label>
+                    <input type="number" id="stock" name="stock" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="productImage">Product Image</label>
+                    <input type="file" id="productImage" name="productImage" accept="image/*" required>
+                    <div id="imagePreview" class="image-preview"></div>
+                </div>
+                <button type="submit" class="submit-btn">Upload Product</button>
+            </form>
+        </div>
+
+        <div id="reviewSection" class="content-section">
+            <div class="review-tabs">
+                <button class="tab-btn active" onclick="showReviewTab('products')">Product Reviews</button>
+                <button class="tab-btn" onclick="showReviewTab('videos')">Video Reviews</button>
+            </div>
+
+            <div id="productReviewsTab">
+                <div class="review-form">
+                    <h3>Write a Product Review</h3>
+                    <select id="productSelect" class="review-select">
+                        <option value="">Select a product</option>
+                    </select>
+                    <div class="rating">
+                        <i class="far fa-star" data-rating="1"></i>
+                        <i class="far fa-star" data-rating="2"></i>
+                        <i class="far fa-star" data-rating="3"></i>
+                        <i class="far fa-star" data-rating="4"></i>
+                        <i class="far fa-star" data-rating="5"></i>
+                    </div>
+                    <textarea id="productReviewText" placeholder="Write your review here..."></textarea>
+                    <button onclick="submitReview('product')">Submit Review</button>
+                </div>
+                <div id="productReviews" class="reviews-container"></div>
+            </div>
+
+            <div id="videoReviewsTab" style="display: none;">
+                <div class="review-form">
+                    <h3>Write a Video Review</h3>
+                    <select id="videoSelect" class="review-select">
+                        <option value="">Select a video</option>
+                    </select>
+                    <div class="rating">
+                        <i class="far fa-star" data-rating="1"></i>
+                        <i class="far fa-star" data-rating="2"></i>
+                        <i class="far fa-star" data-rating="3"></i>
+                        <i class="far fa-star" data-rating="4"></i>
+                        <i class="far fa-star" data-rating="5"></i>
+                    </div>
+                    <textarea id="videoReviewText" placeholder="Write your review here..."></textarea>
+                    <button onclick="submitReview('video')">Submit Review</button>
+                </div>
+                <div id="videoReviews" class="reviews-container"></div>
+            </div>
+        </div>
+
+        <div id="resourceSection" class="content-section">
+            <div class="learning-resources">
+                <h2>Learning Resources</h2>
+                <div class="filters">
+                    <input type="text" class="filter-input" placeholder="Search resources...">
+                    <select class="sort-select">
+                        <option value="newest">Newest First</option>
+                        <option value="popular">Most Popular</option>
+                        <option value="rating">Highest Rated</option>
+                    </select>
+                </div>
+                <div class="resource-grid" id="resourceGrid">
+                    <!-- Resources will be dynamically populated -->
+                </div>
+            </div>
+        </div>
+
+        <div id="detailsSection" class="content-section">
+            <div class="section-tabs">
+                <button class="tab-btn active" onclick="showDetailsTab('products')">Uploaded Products</button>
+                <button class="tab-btn" onclick="showDetailsTab('videos')">Uploaded Videos</button>
+            </div>
+            
+            <div id="uploadedProductsTab" class="tab-content active">
+                <h2>Your Uploaded Products</h2>
+                <div id="uploadedProductsContainer" class="products-container">
+                    <!-- Uploaded products will be loaded here -->
+                </div>
+            </div>
+
+            <div id="uploadedVideosTab" class="tab-content">
+                <h2>Your Uploaded Videos</h2>
+                <div id="uploadedVideosContainer" class="resource-grid">
+                    <!-- Uploaded videos will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Community Chat -->
+        <button class="chat-toggle">
+            <i class="fas fa-comments"></i>
+        </button>
+
+        <div class="community-chat">
+            <div class="chat-header">
+                <span>Community Chat</span>
+                <i class="fas fa-times" id="closeChat"></i>
+            </div>
+            <div class="chat-messages">
+                <!-- Chat messages will be populated here -->
+            </div>
+            <div class="chat-input">
+                <input type="text" placeholder="Type your message...">
+                <button><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        // Get category and subcategory from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const category = urlParams.get('category');
+        const subcategory = urlParams.get('subcategory');
+
+        // Set subcategory title
+        document.getElementById('subcategoryTitle').textContent = subcategory;
+
+        // Show section function
+        function showSection(section) {
+            const sections = ['learn', 'purchase', 'upload', 'review', 'details'];
+            sections.forEach(s => {
+                const element = document.getElementById(s + 'Section');
+                if (element) {
+                    element.style.display = s === section ? 'block' : 'none';
+                }
+            });
+        }
+
+        // Get products for current subcategory
+        function getSubcategoryProducts() {
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            return products.filter(p => p.subcategory === subcategory);
+        }
+
+        // Load consumer products
+        function loadConsumerProducts(products) {
+            const container = document.getElementById('productsContainer');
+            if (!container) return;
+            
+            container.innerHTML = '';
+
+            if (products.length === 0) {
+                container.innerHTML = `
+                    <div class="no-products">
+                        <p>No products available in this category.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            products.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                
+                card.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" class="product-image">
+                    <div class="product-details">
+                        <h3 class="product-title">${product.name}</h3>
+                        <p class="product-description">${product.description}</p>
+                        <div class="product-price">₹${product.price}</div>
+                        <div class="product-stock">Stock: ${product.stock}</div>
+                        <div class="seller-details">
+                            <p><strong>Seller:</strong> ${product.seller ? product.seller.name : 'Unknown'}</p>
+                            <p><strong>Contact:</strong> ${product.seller ? product.seller.contact : 'N/A'}</p>
+                            <p><strong>Email:</strong> ${product.seller ? product.seller.email : 'N/A'}</p>
+                        </div>
+                        <div class="product-actions">
+                            <button class="view-btn">
+                                <i class="fas fa-eye"></i> View
+                            </button>
+                            <div class="quantity-controls">
+                                <button class="quantity-btn minus" onclick="updateQuantity('${product.id}', 'decrease')">-</button>
+                                <input type="number" class="quantity-input" value="1" min="1" max="${product.stock}" 
+                                    onchange="validateQuantity(this, ${product.stock})" data-product-id="${product.id}">
+                                <button class="quantity-btn plus" onclick="updateQuantity('${product.id}', 'increase')">+</button>
+                            </div>
+                            <button class="add-to-cart-btn" onclick="addToCart('${product.id}', this)">
+                                <i class="fas fa-shopping-cart"></i> Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        // Handle form submission
+        document.getElementById('uploadForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const imageFile = document.getElementById('productImage').files[0];
+            
+            if (!imageFile) {
+                showToast('Please select an image', 'error');
+                return;
+            }
+
+            // Convert image to base64
+            const reader = new FileReader();
+            reader.onload = async function(e) {
+                // Get current user details
+                const user = JSON.parse(localStorage.getItem('sahasra_user'));
+                if (!user) {
+                    showToast('Please login to upload products', 'error');
+                    window.location.href = 'landing.html';
+                    return;
+                }
+
+                const product = {
+                    id: Date.now().toString(),
+                    name: document.getElementById('productName').value,
+                    description: document.getElementById('description').value,
+                    price: parseFloat(document.getElementById('price').value),
+                    stock: parseInt(document.getElementById('stock').value),
+                    image: e.target.result,
+                    subcategory: subcategory,
+                    category: category,
+                    uploadDate: new Date().toISOString(),
+                    seller: {
+                        id: user.email || user.mobile, // Use email or mobile as unique identifier
+                        name: user.fullname,
+                        contact: user.mobile,
+                        email: user.email
+                    }
+                };
+                
+                // Add to products list
+                let products = JSON.parse(localStorage.getItem('products')) || [];
+                products.push(product);
+                localStorage.setItem('products', JSON.stringify(products));
+
+                // Reset form and preview
+                document.getElementById('uploadForm').reset();
+                document.getElementById('imagePreview').innerHTML = '';
+                
+                showToast('Product uploaded successfully!', 'success');
+                
+                // Refresh products display
+                const updatedProducts = getSubcategoryProducts();
+                loadConsumerProducts(updatedProducts);
+            };
+
+            reader.readAsDataURL(imageFile);
+        });
+
+        function validateQuantity(input, maxStock) {
+            let value = parseInt(input.value);
+            if (isNaN(value) || value < 1) {
+                input.value = 1;
+            } else if (value > maxStock) {
+                input.value = maxStock;
+                showToast('Stock is nil.', 'error');
+            }
+        }
+
+        function updateQuantity(productId, action) {
+            const input = document.querySelector(`.quantity-input[data-product-id="${productId}"]`);
+            const maxStock = parseInt(input.max);
+            let currentValue = parseInt(input.value);
+
+            if (action === 'increase' && currentValue < maxStock) {
+                input.value = currentValue + 1;
+            } else if (action === 'increase' && currentValue >= maxStock) {
+                showToast('Stock is nil.', 'error');
+            } else if (action === 'decrease' && currentValue > 1) {
+                input.value = currentValue - 1;
+            }
+        }
+
+        function addToCart(productId, button) {
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            const product = products.find(p => p.id === productId);
+            
+            if (!product) {
+                showToast('Product not found!', 'error');
+                return;
+            }
+
+            const quantityInput = document.querySelector(`.quantity-input[data-product-id="${productId}"]`);
+            const requestedQuantity = parseInt(quantityInput.value);
+
+            if (product.stock <= 0) {
+                showToast('Product out of stock!', 'error');
+                return;
+            }
+
+            if (requestedQuantity > product.stock) {
+                showToast('Stock is nil.', 'error');
+                return;
+            }
+
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartItem = cart.find(item => item.productId === productId);
+
+            if (cartItem) {
+                if (cartItem.quantity + requestedQuantity <= product.stock) {
+                    cartItem.quantity += requestedQuantity;
+                    showToast('Quantity increased in cart!', 'success');
+                } else {
+                    showToast('Stock is nil.', 'error');
+                    return;
+                }
+            } else {
+                cart.push({
+                    productId: productId,
+                    quantity: requestedQuantity,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image
+                });
+                showToast('Added to cart!', 'success');
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            button.classList.add('added');
+            setTimeout(() => button.classList.remove('added'), 1000);
+            
+            // Reset quantity input to 1 after adding to cart
+            quantityInput.value = 1;
+        }
+
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            
+            const container = document.getElementById('toastContainer');
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('fade-out');
+                setTimeout(() => container.removeChild(toast), 500);
+            }, 3000);
+        }
+
+        // Initialize page
+        showSection('purchase');
+        const initialProducts = getSubcategoryProducts();
+        loadConsumerProducts(initialProducts);
+
+        function showDetailsTab(tab) {
+            const tabs = ['products', 'videos'];
+            tabs.forEach(t => {
+                const element = document.getElementById('uploaded' + t.charAt(0).toUpperCase() + t.slice(1) + 'Tab');
+                if (element) {
+                    element.style.display = t === tab ? 'block' : 'none';
+                }
+            });
+
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            tabButtons.forEach(button => {
+                button.classList.remove('active');
+                if (button.textContent.toLowerCase().includes(tab)) {
+                    button.classList.add('active');
+                }
+            });
+        }
+
+        // Handle video upload
+        document.getElementById('videoUploadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const title = document.getElementById('videoTitle').value;
+            const description = document.getElementById('videoDescription').value;
+            const videoFile = document.getElementById('videoFile').files[0];
+            const coverFile = document.getElementById('videoCover').files[0];
+            
+            if (!videoFile) {
+                showToast('Please select a video file', 'error');
+                return;
+            }
+
+            // Convert video to base64
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const video = {
+                    id: Date.now().toString(),
+                    title: title,
+                    description: description,
+                    video: e.target.result,
+                    category: category,
+                    subcategory: subcategory,
+                    uploadDate: new Date().toISOString(),
+                    views: 0
+                };
+
+                // Save video data
+                let videos = JSON.parse(localStorage.getItem('videos')) || [];
+                videos.push(video);
+                localStorage.setItem('videos', JSON.stringify(videos));
+
+                // Reset form
+                document.getElementById('videoUploadForm').reset();
+                document.getElementById('imagePreview').innerHTML = '';
+                
+                showToast('Video uploaded successfully!', 'success');
+                
+                // Refresh videos display
+                loadVideos();
+                loadUploadedVideos();
+                updateVideoCount();
+            };
+            
+            reader.readAsDataURL(videoFile);
+        });
+
+        function viewVideo(videoId) {
+            const videos = JSON.parse(localStorage.getItem('videos')) || [];
+            const video = videos.find(v => v.id === videoId);
+            
+            if (!video) {
+                showToast('Video not found!', 'error');
+                return;
+            }
+
+            // Create video player
+            const player = document.createElement('div');
+            player.className = 'video-player';
+            player.innerHTML = `
+                <div class="player-overlay">
+                    <div class="player-content">
+                        <video controls>
+                            <source src="${video.video}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <h3>${video.title}</h3>
+                        <p>${video.description}</p>
+                        <button class="close-player" onclick="this.closest('.video-player').remove()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(player);
+
+            // Increment views
+            video.views++;
+            localStorage.setItem('videos', JSON.stringify(videos));
+
+            // Update displays
+            loadUploadedVideos();
+            loadVideos();
+            updateVideoCount();
+        }
+
+        // Check if we're in uploaded videos section
+        if (subcategory === 'uploaded-videos' && type === 'videos') {
+            showSection('details');
+            showDetailsTab('videos');
+            loadUploadedVideos();
+        }
+
+        // Load videos in learn section
+        function loadVideos() {
+            const videos = JSON.parse(localStorage.getItem('videos')) || [];
+            const subcategoryVideos = videos.filter(v => v.subcategory === subcategory);
+            
+            const resourceGrid = document.getElementById('resourceGrid');
+            if (!resourceGrid) return;
+
+            resourceGrid.innerHTML = '';
+            
+            if (subcategoryVideos.length === 0) {
+                resourceGrid.innerHTML = `
+                    <div class="no-videos">
+                        <p>No videos available in this category.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            subcategoryVideos.forEach(video => {
+                const card = document.createElement('div');
+                card.className = 'resource-card';
+                
+                card.innerHTML = `
+                    <div class="video-details">
+                        <h3>${video.title}</h3>
+                        <p>${video.description}</p>
+                        <div class="video-meta">
+                            <span><i class="fas fa-eye"></i> ${video.views} views</span>
+                            <span><i class="fas fa-calendar"></i> ${new Date(video.uploadDate).toLocaleDateString()}</span>
+                        </div>
+                    </div>
+                `;
+                
+                resourceGrid.appendChild(card);
+            });
+
+            // Update video count
+            updateVideoCount();
+        }
+
+        // Load videos in uploaded videos section
+        function loadUploadedVideos() {
+            const videos = JSON.parse(localStorage.getItem('videos')) || [];
+            const uploadedVideos = videos.filter(v => v.subcategory === subcategory);
+            
+            const container = document.getElementById('uploadedVideosContainer');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            if (uploadedVideos.length === 0) {
+                container.innerHTML = `
+                    <div class="no-videos">
+                        <p>No videos uploaded in this category.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            uploadedVideos.forEach(video => {
+                const card = document.createElement('div');
+                card.className = 'resource-card';
+                
+                card.innerHTML = `
+                    <div class="video-details">
+                        <h3>${video.title}</h3>
+                        <p>${video.description}</p>
+                        <div class="video-meta">
+                            <span><i class="fas fa-eye"></i> ${video.views} views</span>
+                            <span><i class="fas fa-calendar"></i> ${new Date(video.uploadDate).toLocaleDateString()}</span>
+                        </div>
+                        <div class="video-actions">
+                            <button class="play-btn" onclick="viewVideo('${video.id}')">
+                                <i class="fas fa-play"></i> View
+                            </button>
+                            <button class="delete-btn" onclick="deleteVideo('${video.id}')">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        function deleteVideo(videoId) {
+            if (!confirm('Are you sure you want to delete this video?')) {
+                return;
+            }
+
+            let videos = JSON.parse(localStorage.getItem('videos')) || [];
+            videos = videos.filter(v => v.id !== videoId);
+            localStorage.setItem('videos', JSON.stringify(videos));
+
+            showToast('Video deleted successfully!', 'success');
+
+            // Update displays
+            loadUploadedVideos();
+            loadVideos();
+            updateVideoCount();
+        }
+
+        function updateVideoCount() {
+            const videos = JSON.parse(localStorage.getItem('videos')) || [];
+            const count = videos.filter(v => v.subcategory === subcategory).length;
+            
+            // Update count in localStorage for categories page
+            let videoCounts = JSON.parse(localStorage.getItem('videoCounts')) || {};
+            videoCounts[subcategory] = count;
+            localStorage.setItem('videoCounts', JSON.stringify(videoCounts));
+        }
+
+        let selectedRating = 0;
+
+        function showReviewTab(tab) {
+            document.getElementById('productReviewsTab').style.display = tab === 'products' ? 'block' : 'none';
+            document.getElementById('videoReviewsTab').style.display = tab === 'videos' ? 'block' : 'none';
+            
+            const buttons = document.querySelectorAll('.review-tabs .tab-btn');
+            buttons.forEach(btn => {
+                btn.classList.toggle('active', btn.textContent.toLowerCase().includes(tab));
+            });
+
+            loadReviews(tab);
+        }
+
+        function initializeReviewSystem() {
+            // Set up star rating
+            document.querySelectorAll('.rating').forEach(container => {
+                container.querySelectorAll('i').forEach(star => {
+                    star.addEventListener('click', function() {
+                        selectedRating = parseInt(this.dataset.rating);
+                        updateStars(this.closest('.rating'));
+                    });
+                });
+            });
+
+            // Load products and videos into selects
+            const products = JSON.parse(localStorage.getItem('products')) || [];
+            const videos = JSON.parse(localStorage.getItem('videos')) || [];
+
+            const productSelect = document.getElementById('productSelect');
+            const videoSelect = document.getElementById('videoSelect');
+
+            products.forEach(product => {
+                if (product.subcategory === subcategory) {
+                    const option = new Option(product.name, product.id);
+                    productSelect.add(option);
+                }
+            });
+
+            videos.forEach(video => {
+                if (video.subcategory === subcategory) {
+                    const option = new Option(video.title, video.id);
+                    videoSelect.add(option);
+                }
+            });
+
+            loadReviews('products');
+        }
+
+        function updateStars(container) {
+            container.querySelectorAll('i').forEach((star, index) => {
+                star.className = index < selectedRating ? 'fas fa-star' : 'far fa-star';
+            });
+        }
+
+        function submitReview(type) {
+            const select = document.getElementById(type + 'Select');
+            const text = document.getElementById(type + 'ReviewText');
+            
+            if (!select.value) {
+                showToast('Please select a ' + type, 'error');
+                return;
+            }
+
+            if (!selectedRating) {
+                showToast('Please select a rating', 'error');
+                return;
+            }
+
+            if (!text.value.trim()) {
+                showToast('Please write a review', 'error');
+                return;
+            }
+
+            const review = {
+                id: Date.now().toString(),
+                itemId: select.value,
+                type: type,
+                rating: selectedRating,
+                text: text.value.trim(),
+                date: new Date().toISOString()
+            };
+
+            let reviews = JSON.parse(localStorage.getItem('reviews')) || [];
+            reviews.push(review);
+            localStorage.setItem('reviews', JSON.stringify(reviews));
+
+            // Reset form
+            select.value = '';
+            text.value = '';
+            selectedRating = 0;
+            updateStars(document.querySelector('#' + type + 'ReviewsTab .rating'));
+
+            showToast('Review submitted successfully!', 'success');
+            loadReviews(type + 's');
+        }
+
+        function loadReviews(type) {
+            const reviews = JSON.parse(localStorage.getItem('reviews')) || [];
+            const container = document.getElementById(type.replace('s', '') + 'Reviews');
+            
+            container.innerHTML = '';
+
+            const typeReviews = reviews.filter(r => r.type === type.slice(0, -1));
+            
+            if (typeReviews.length === 0) {
+                container.innerHTML = `<p>No reviews yet</p>`;
+                return;
+            }
+
+            typeReviews.forEach(review => {
+                const stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
+                const card = document.createElement('div');
+                card.className = 'review-card';
+                card.innerHTML = `
+                    <div class="review-stars">${stars}</div>
+                    <p>${review.text}</p>
+                    <small>${new Date(review.date).toLocaleDateString()}</small>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Initialize review system when page loads
+        initializeReviewSystem();
+
+        // Initialize language on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+            changeLanguage(currentLang);
+            document.getElementById('currentLang').textContent = currentLang.toUpperCase();
+            updatePageLanguage();
+            
+            // Update subcategory title with translation
+            const urlParams = new URLSearchParams(window.location.search);
+            const category = urlParams.get('category');
+            if (category) {
+                const translatedCategory = translations[currentLang][category] || category;
+                document.getElementById('subcategoryTitle').textContent = translatedCategory;
+            }
+        });
+
+        // Language toggle function
+        function toggleLanguageOptions() {
+            const langOptions = document.getElementById('languageOptions');
+            langOptions.style.display = langOptions.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Update language when changed
+        function changeLanguage(lang) {
+            localStorage.setItem('preferredLanguage', lang);
+            document.getElementById('currentLang').textContent = lang.toUpperCase();
+            updatePageLanguage();
+            
+            // Update subcategory title with new language
+            const urlParams = new URLSearchParams(window.location.search);
+            const category = urlParams.get('category');
+            if (category) {
+                const translatedCategory = translations[lang][category] || category;
+                document.getElementById('subcategoryTitle').textContent = translatedCategory;
+            }
+        }
+
+        // Language functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize language
+            const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+            changeLanguage(currentLang);
+            
+            // Set up language button click handler
+            const languageBtn = document.getElementById('languageBtn');
+            const languageOptions = document.getElementById('languageOptions');
+            
+            languageBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                languageOptions.classList.toggle('show');
+            });
+            
+            // Set up language option click handlers
+            const langOptions = document.querySelectorAll('.language-option');
+            langOptions.forEach(option => {
+                option.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const lang = this.getAttribute('onclick').match(/'(.+)'/)[1];
+                    changeLanguage(lang);
+                    languageOptions.classList.remove('show');
+                });
+            });
+            
+            // Close language dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.language-controls')) {
+                    languageOptions.classList.remove('show');
+                }
+            });
+        });
+
+        // Function to change language
+        function changeLanguage(lang) {
+            localStorage.setItem('preferredLanguage', lang);
+            document.getElementById('currentLang').textContent = lang.toUpperCase();
+            
+            // Update all translatable elements
+            const elements = document.querySelectorAll('[data-translate]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[lang] && translations[lang][key]) {
+                    if (element.tagName === 'INPUT' && element.getAttribute('placeholder')) {
+                        element.placeholder = translations[lang][key];
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+            
+            // Update subcategory title with new language
+            const urlParams = new URLSearchParams(window.location.search);
+            const category = urlParams.get('category');
+            if (category) {
+                const translatedCategory = translations[lang][category] || category;
+                document.getElementById('subcategoryTitle').textContent = translatedCategory;
+            }
+            
+            // Update document direction if needed (for RTL languages)
+            document.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            
+            // Dispatch event for other components to know language changed
+            const event = new CustomEvent('languageChanged', { detail: { language: lang } });
+            document.dispatchEvent(event);
+        }
+    </script>
+</body>
+</html>
